@@ -1,0 +1,12 @@
+
+
+<div 
+  class="w-full p-2 my-2 rounded-md cursor-pointer "
+  [ngClass]="{'bg-sky-300': item.link !== urlActual, 'bg-sky-700':item.link === urlActual}"
+  >
+  <a 
+    class="text-white font-semibold text-sm"
+    href={{item.link}} routerLinkActive ariaCurrentWhenActive="page">
+    {{item.title}}
+  </a>
+</div>
