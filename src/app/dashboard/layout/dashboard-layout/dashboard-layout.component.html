@@ -1,0 +1,23 @@
+
+<main class="h-full">
+  <mat-drawer-container class="h-screen w-full" autosize>
+    <mat-drawer 
+      #drawner
+      class="h-full w-1/5 p-10" 
+      mode="side" 
+      opened>
+      <h3
+        class="font-bold text-slate-700 text-lg"
+      >
+        Modulos
+      </h3>
+      <div *ngFor="let item of menus">
+        <app-item-side-nav [item]="item"/>
+      </div>
+    
+    </mat-drawer>
+    <mat-drawer-content>
+      <router-outlet/>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</main>  
