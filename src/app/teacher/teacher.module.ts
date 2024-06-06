@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { TeacherComponent } from './teacher.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { TeacherDialogComponent } from './components/teacher-dialog/teacher-dialog.component';
 
 
 
 @NgModule({
   declarations: [
+
   ],
   imports: [
     CommonModule,

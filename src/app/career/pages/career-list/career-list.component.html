@@ -1,29 +1,10 @@
-<div class="container mx-auto py-12">
-  <div class="max-w-full px-3 mb-6 mx-auto">
-    <div class="card bg-white shadow-lg rounded-lg m-5">
-      <div class="card-header flex justify-end items-center p-5 border-b border-gray-200 bg-gray-50">
-        <button
-          (click)="abrirDialogo()"
-          class="btn-new-teacher px-6 py-2 rounded-lg font-bold text-white bg-blue-600 hover:bg-blue-700 transition-transform transform hover:-translate-y-1">
-          + Nueva Carrera
-        </button>
-      </div>
-      <div class="card-body p-5">
-        <div class="overflow-x-auto">
-          <table class="table-auto w-full text-left text-gray-700">
-            <thead class="bg-gray-100 text-gray-600">
-              <tr>
-                <th class="p-3">Nombre</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of careers$ | async" class="border-b border-gray-200 hover:bg-gray-50">
-                <td class="p-3">{{item.name}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
+
+<app-section-list
+  titulo="Carrera"
+ [tablas]="tablas"
+ [items]="careers$ | async"
+  (editItem)="editCareer($event)"
+  (deleteItem)="deleteCareer($event)"
+  (newItem)="abrirDialogo()"
+></app-section-list>

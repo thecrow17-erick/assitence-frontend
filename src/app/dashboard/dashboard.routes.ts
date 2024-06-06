@@ -2,6 +2,7 @@ import { Route } from "@angular/router";
 import { DashboardComponent } from "./dashboard.component";
 import { TeacherComponent } from "../teacher/teacher.component";
 import { CareerListComponent } from "../career/pages/career-list/career-list.component";
+import { MatterListComponent } from "../matter/pages/matter-list/matter-list.component";
 
 
 export const dashboardRoute:Route[] = [
@@ -29,7 +30,7 @@ export const dashboardRoute:Route[] = [
       },
       {
         path: "materia",
-        component: TeacherComponent
+        component: MatterListComponent
       },
       {
         path: "gestion",

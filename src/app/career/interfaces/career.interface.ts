@@ -1,9 +1,9 @@
 
 export interface Career {
+  id:            number;
   name:          string;
+  status:        boolean;
 }
-
-
 export interface CareerResponse {
   statusCode: number;
   message:    string;
@@ -11,17 +11,25 @@ export interface CareerResponse {
 }
 
 export interface Data {
-  content:          any[];
+  content:          Content[];
   pageable:         Pageable;
   last:             boolean;
   totalPages:       number;
   totalElements:    number;
-  first:            boolean;
-  numberOfElements: number;
   size:             number;
   number:           number;
   sort:             Sort;
+  first:            boolean;
+  numberOfElements: number;
   empty:            boolean;
+}
+
+export interface Content {
+  createdAt: Date;
+  updatedAt: Date;
+  id:        number;
+  name:      string;
+  status:    boolean;
 }
 
 export interface Pageable {
@@ -34,7 +42,7 @@ export interface Pageable {
 }
 
 export interface Sort {
-  sorted:   boolean;
-  unsorted: boolean;
   empty:    boolean;
+  unsorted: boolean;
+  sorted:   boolean;
 }

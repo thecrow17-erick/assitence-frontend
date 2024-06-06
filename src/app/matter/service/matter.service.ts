@@ -1,21 +1,22 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import { Subject, Observable, tap } from 'rxjs';
 import { environment } from '../../../enviroments/enviroment';
+import { CareerResponse } from '../../career/interfaces/career.interface';
 import { TeacherResponse } from '../../teacher/interface/teacher.interface';
-import { CareerResponse } from '../interfaces/career.interface';
+import { MatterCreateResponse, MatterGetResponse } from '../interfaces/matter.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CareerService {
+export class MatterService {
 
-  apiUrl = `${environment.apiUrl}/career`;
-  careerCreated = new Subject<void>();
+  apiUrl = `${environment.apiUrl}/matter`;
+  matterCreated = new Subject<void>();
 
   constructor( private http: HttpClient) { }
 
-  async getTeachers(): Promise<CareerResponse> {
+  async getMatters(): Promise<MatterGetResponse> {
     const token = localStorage.getItem('token');
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
@@ -24,7 +25,7 @@ export class CareerService {
     const url = `${this.apiUrl}?skip=${skip}&limit=${limit}`;
 
     return new Promise((resolve, reject) => {
-      this.http.get<TeacherResponse>(url, {headers: header}).subscribe(
+      this.http.get<MatterGetResponse>(url, {headers: header}).subscribe(
         (response) => {
           // console.log(response);
           resolve(response);
@@ -36,22 +37,22 @@ export class CareerService {
     });
   }
 
-  createCareer(data: any): Observable<TeacherResponse> {
+  createMatter(data: any): Observable<MatterCreateResponse> {
     const token = localStorage.getItem('token');
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    return this.http.post<TeacherResponse>(this.apiUrl, data, {headers: header}).pipe(
+    return this.http.post<MatterCreateResponse>(this.apiUrl, data, {headers: header}).pipe(
       tap(response => {
         console.log(response);
         console.log('Emitiendo TeacherCreated...');
-        this.careerCreated.next();
+        this.matterCreated.next();
       })
     );
 
 
   }
 
-  public deleteCareer(id : number): Observable<any> {
+  public deleteMatter(id : number): Observable<any> {
     const token = localStorage.getItem('token');
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const url = `${this.apiUrl}/${id}`;
@@ -60,12 +61,12 @@ export class CareerService {
       tap(response => {
         // console.log(response);
         // console.log('Emitiendo TeacherCreated...');
-        this.careerCreated.next();
+        this.matterCreated.next();
       })
     );
   }
 
-  public updateCareer(data: any): Observable<any> {
+  public updateMatter(data: any): Observable<any> {
     const token = localStorage.getItem('token');
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const url = `${this.apiUrl}/${data.id}`;
@@ -76,13 +77,8 @@ export class CareerService {
       tap(response => {
         // console.log(response);
         // console.log('Emitiendo TeacherCreated...');
-        this.careerCreated.next();
+        this.matterCreated.next();
       })
     );
   }
-
-
-
-
-
 }
