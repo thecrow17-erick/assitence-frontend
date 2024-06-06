@@ -10,11 +10,12 @@ import { Router, RouterModule } from '@angular/router';
     RouterModule
   ],
   templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent {
 
-
+  private isSideBarOpen:boolean = true;
 
   private secciones:string[]=[
     "Docentes",
@@ -52,6 +53,8 @@ export class DashboardComponent {
     private ruta: Router
   ) {
 
+
+
   }
 
   public getSecciones():string[]{
@@ -76,9 +79,18 @@ export class DashboardComponent {
     return secciones.map((seccion, index) => ({ seccion, icon: icons[index] , router: router[index]}));
   }
 
-  public navegarA( route : string ):void{
+  // En tu archivo TypeScript del componente
+  public toggleSidebar() {
+    this.isSideBarOpen = !this.isSideBarOpen;
+  }
+
+  get isOpen(): boolean {
+    return this.isSideBarOpen;
+  }
+
+  public navegarA(route: string): void {
     console.log(route);
-    this.ruta.navigate(['/dashboard' , route]);
+    this.ruta.navigate(['/dashboard', route]);
   }
 
 
