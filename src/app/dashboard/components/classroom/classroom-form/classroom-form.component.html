@@ -1,0 +1,64 @@
+<h2 class="text-sm my-2 mx-5 font-semibold">{{classroom? "Actualizar aula": "Crear aula"}}</h2>
+
+<div class="container  flex justify-center items-center">
+  <form [formGroup]="classroomForm" (ngSubmit)="classroom? updateMatter(): createMatter()" class="flex flex-col xl:w-2/4 w-full">
+    <mat-error *ngFor="let item of messageError">
+      {{item}}
+    </mat-error>
+    <mat-form-field class="my-3" appearance="fill">
+      <mat-label>Nro</mat-label>
+      <input formControlName="nro" matInput placeholder="Numero del aula" required>
+      <mat-error *ngIf="classroomForm.get('nro')?.hasError('required') && classroomForm.get('nro')?.touched">
+        Este campo es obligatorio
+      </mat-error>
+      <mat-error *ngIf="classroomForm.get('nro')?.hasError('minlength') && classroomForm.get('nro')?.touched">
+        Mínimo 2 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="my-3" appearance="fill">
+      <mat-label>Descripcion</mat-label>
+      <input formControlName="description" matInput placeholder="description del aula" required>
+      <mat-error *ngIf="classroomForm.get('description')?.hasError('required') && classroomForm.get('description')?.touched">
+        Este campo es obligatorio
+      </mat-error>
+      <mat-error *ngIf="classroomForm.get('description')?.hasError('minlength') && classroomForm.get('description')?.touched">
+        Mínimo 10 caracteres
+      </mat-error>
+      <mat-error *ngIf="classroomForm.get('description')?.hasError('maxlength') && classroomForm.get('description')?.touched">
+        Maximo 255 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="my-3" appearance="fill">
+      <mat-label>Modulos</mat-label>
+      <mat-select formControlName="module_id">
+        <mat-option 
+        *ngFor="let item of modules" 
+        [value]="item.id"
+        >
+          {{item.nro}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="classroomForm.get('module_id')?.hasError('required') && classroomForm.get('module_id')?.touched">
+        Este campo es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <div >
+      <button
+        (click)="goBack()"
+        type="button"
+        class="underline mr-3 text-red-500">
+        Cancelar
+      </button>
+      
+      <button
+        type="submit"
+        [disabled]="classroomForm.invalid"
+        class="py-2 px-5 bg-blue-500 rounded-md text-white">
+        {{classroom? "Actualizar":"Crear"}}
+      </button>
+    </div>
+  </form>
+</div>

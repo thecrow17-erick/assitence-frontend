@@ -1,0 +1,21 @@
+<div class="container mx-auto h-full rounded-sm overflow-y-scroll py-12">
+  <div class="max-w-full px-3 mb-6 mx-auto">
+    <div class="card bg-white shadow-lg rounded-lg m-5">
+      <div class="card-header flex justify-end items-center p-5 border-b border-gray-200 bg-gray-50">
+        <button 
+        (click)="onNavCreate()"
+        class="btn-new-teacher px-6 py-2 rounded-lg font-bold text-white bg-blue-600 hover:bg-blue-700 transition-transform transform hover:-translate-y-1">
+          + Añadir Modulo
+        </button>
+      </div>
+      <app-module-table
+        [IModules]="IModules()"
+        [page]="pages()"
+        [totalPage]="totalPages()"
+        (delete)="deleteModule($event)"
+        (nextPage)="nextPage()"
+        (previewPage)="previewPage()"
+      />
+    </div>
+  </div>
+</div>

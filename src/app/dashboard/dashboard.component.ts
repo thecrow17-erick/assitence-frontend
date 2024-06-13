@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { MaterialModule } from '../material/material.module';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    MaterialModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
@@ -19,43 +21,31 @@ export class DashboardComponent {
 
   private secciones:string[]=[
     "Docentes",
-    "Cargas Horarias",
     "Carrera ",
     "Materia ",
-    "Gestion",
-    "Periodos",
     "Modulos",
-    "Reportes",
+    "Aulas",
   ];
 
   private router: string[] = [
     "docente",
-    "carga-horaria",
     "carrera",
     "materia",
-    "gestion",
-    "periodo",
     "modulo",
-    "reporte",
+    "aula",
+
   ]
 
   private iconos : string[] = [
     "person_2",
     "pending_actions",
     "receipt_long",
-    "subject",
-    "task",
-    "date_range",
     "view_module",
-    "assessment",
+    "flight_class",
   ];
   constructor(
     private ruta: Router
-  ) {
-
-
-
-  }
+  ) {}
 
   public getSecciones():string[]{
     return this.secciones;
@@ -73,9 +63,6 @@ export class DashboardComponent {
     const secciones = this.getSecciones();
     const icons = this.getIcons();
     const router = this.getRouter();
-
-
-
     return secciones.map((seccion, index) => ({ seccion, icon: icons[index] , router: router[index]}));
   }
 

@@ -3,7 +3,11 @@
 <app-section-list
   titulo="Materia"
   [tablas]="tablas"
- [items]="matter$ | async"
+ [items]="matters()"
+ [page]="pages()"
+ [totalPage]="totalPages()"
+ (nextPage)="nextPage()"
+ (previewPage)="previewPage()"
   (editItem)="editMatter($event)"
   (deleteItem)="deleteMatter($event)"
   (newItem)="abrirDialogo()"

@@ -1,9 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../../enviroments/enviroment';
-import { TeacherResponse } from '../../teacher/interface/teacher.interface';
-import { CareerResponse } from '../interfaces/career.interface';
+import {  ICareer, ICareerRes, ICareerResponse, ICreateCareer } from '../interfaces/career.interface';
+import { IPagination, IValuePagination } from '../../interface';
+import { IResponse } from '../../interface/res.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,66 +16,60 @@ export class CareerService {
 
   constructor( private http: HttpClient) { }
 
-  async getTeachers(): Promise<CareerResponse> {
+  getCareer({limit,skip}:IValuePagination): Observable<IResponse<IPagination<ICareerRes>>> {
     const token = localStorage.getItem('token');
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const params = new HttpParams()
+      .set("skip",skip)
+      .set('limit',limit)
 
-    const skip = 0;
-    const limit = 10;
-    const url = `${this.apiUrl}?skip=${skip}&limit=${limit}`;
-
-    return new Promise((resolve, reject) => {
-      this.http.get<TeacherResponse>(url, {headers: header}).subscribe(
-        (response) => {
-          // console.log(response);
-          resolve(response);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
-    });
+    return this.http.get<IResponse<IPagination<ICareerRes>>>(this.apiUrl, {params,headers: header})
+  
   }
 
-  createCareer(data: any): Observable<TeacherResponse> {
+  createCareer(data: ICreateCareer): Observable<IResponse<ICareerRes>> {
     const token = localStorage.getItem('token');
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    return this.http.post<TeacherResponse>(this.apiUrl, data, {headers: header}).pipe(
+    return this.http.post<IResponse<ICareerRes>>(this.apiUrl, data, {headers: header}).pipe(
       tap(response => {
         console.log(response);
-        console.log('Emitiendo TeacherCreated...');
+        // console.log('Emitiendo TeacherCreated...');
         this.careerCreated.next();
       })
     );
-
-
+  }
+  findCareerById(id:number): Observable<IResponse<ICareerResponse>> {
+    const token = localStorage.getItem('token');
+    const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const urlId = `${this.apiUrl}/${id}`
+    return this.http.get<IResponse<ICareerResponse>>(urlId, {headers: header})
   }
 
-  public deleteCareer(id : number): Observable<any> {
+  public deleteCareer(id : number): Observable<ICareerRes> {
     const token = localStorage.getItem('token');
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const url = `${this.apiUrl}/${id}`;
 
     return this.http.delete<any>(url , {headers: header}).pipe(
       tap(response => {
-        // console.log(response);
+        console.log(response);
         // console.log('Emitiendo TeacherCreated...');
         this.careerCreated.next();
       })
     );
   }
 
-  public updateCareer(data: any): Observable<any> {
+  public updateCareer(data: ICareer): Observable<IResponse<ICareerResponse>> {
     const token = localStorage.getItem('token');
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const url = `${this.apiUrl}/${data.id}`;
     const body = {
       name: data.name
     };
-    return this.http.put<any>(url, body, {headers: header}).pipe(
+    return this.http.put<IResponse<ICareerResponse>>(url, body, {headers: header}).pipe(
       tap(response => {
-        // console.log(response);
+        console.log(response);
         // console.log('Emitiendo TeacherCreated...');
         this.careerCreated.next();
       })

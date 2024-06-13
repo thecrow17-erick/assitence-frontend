@@ -1,0 +1,61 @@
+<h2 class="text-sm my-2 mx-5 font-semibold">{{matter? "Actualizar materia": "Crear materia"}}</h2>
+
+<div class="container  flex justify-center items-center">
+  <form [formGroup]="matterForm" (ngSubmit)="matter? updateMatter(): createMatter()" class="flex flex-col xl:w-2/4 w-full">
+    <mat-error *ngFor="let item of messageError">
+      {{item}}
+    </mat-error>
+    <mat-form-field class="my-3" appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input formControlName="name" matInput placeholder="Nombre de la carrera" required>
+      <mat-error *ngIf="matterForm.get('name')?.hasError('required') && matterForm.get('name')?.touched">
+        Este campo es obligatorio
+      </mat-error>
+      <mat-error *ngIf="matterForm.get('name')?.hasError('minlength') && matterForm.get('name')?.touched">
+        Mínimo 3 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="my-3" appearance="fill">
+      <mat-label>Codigo</mat-label>
+      <input formControlName="code" matInput placeholder="Nombre de la carrera" required>
+      <mat-error *ngIf="matterForm.get('code')?.hasError('required') && matterForm.get('code')?.touched">
+        Este campo es obligatorio
+      </mat-error>
+      <mat-error *ngIf="matterForm.get('code')?.hasError('minlength') && matterForm.get('code')?.touched">
+        Mínimo 3 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="my-3" appearance="fill">
+      <mat-label>Carreras</mat-label>
+      <mat-select formControlName="career_id">
+        <mat-option 
+        *ngFor="let item of career" 
+        [value]="item.id"
+        >
+          {{item.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="matterForm.get('career_id')?.hasError('required') && matterForm.get('name')?.touched">
+        Este campo es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <div >
+      <button
+        (click)="goBack()"
+        type="button"
+        class="underline mr-3 text-red-500">
+        Cancelar
+      </button>
+      
+      <button
+        type="submit"
+        [disabled]="matterForm.invalid"
+        class="py-2 px-5 bg-blue-500 rounded-md text-white">
+        {{matter? "Actualizar":"Crear"}}
+      </button>
+    </div>
+  </form>
+</div>

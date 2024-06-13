@@ -1,10 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, Observable, tap } from 'rxjs';
 import { environment } from '../../../enviroments/enviroment';
-import { CareerResponse } from '../../career/interfaces/career.interface';
-import { TeacherResponse } from '../../teacher/interface/teacher.interface';
-import { MatterCreateResponse, MatterGetResponse } from '../interfaces/matter.interface';
+import { ICreateMatter, IMatterRes, IMatterUpdate, IResponseMatter } from '../interfaces/matter.interface';
+import { IPagination, IResponse, IValuePagination } from '../../interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,35 +15,23 @@ export class MatterService {
 
   constructor( private http: HttpClient) { }
 
-  async getMatters(): Promise<MatterGetResponse> {
+  getMatters({limit,skip}:IValuePagination): Observable<IResponse<IPagination<IMatterRes>>> {
     const token = localStorage.getItem('token');
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const params = new HttpParams()
+      .set("skip",skip)
+      .set("limit",limit)
 
-    const skip = 0;
-    const limit = 10;
-    const url = `${this.apiUrl}?skip=${skip}&limit=${limit}`;
-
-    return new Promise((resolve, reject) => {
-      this.http.get<MatterGetResponse>(url, {headers: header}).subscribe(
-        (response) => {
-          // console.log(response);
-          resolve(response);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
-    });
+    return this.http.get<IResponse<IPagination<IMatterRes>>>(this.apiUrl, {params,headers: header})
   }
 
-  createMatter(data: any): Observable<MatterCreateResponse> {
+  createMatter(data: ICreateMatter): Observable<IResponse<IResponseMatter>> {
     const token = localStorage.getItem('token');
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    return this.http.post<MatterCreateResponse>(this.apiUrl, data, {headers: header}).pipe(
+    return this.http.post<IResponse<IResponseMatter>>(this.apiUrl, data, {headers: header}).pipe(
       tap(response => {
         console.log(response);
-        console.log('Emitiendo TeacherCreated...');
         this.matterCreated.next();
       })
     );
@@ -52,28 +39,30 @@ export class MatterService {
 
   }
 
-  public deleteMatter(id : number): Observable<any> {
+  public deleteMatter(id : number): Observable<IResponse<IResponseMatter>> {
     const token = localStorage.getItem('token');
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const url = `${this.apiUrl}/${id}`;
 
-    return this.http.delete<any>(url , {headers: header}).pipe(
+    return this.http.delete<IResponse<IResponseMatter>>(url , {headers: header}).pipe(
       tap(response => {
-        // console.log(response);
+        console.log(response);
         // console.log('Emitiendo TeacherCreated...');
         this.matterCreated.next();
       })
     );
   }
 
-  public updateMatter(data: any): Observable<any> {
+  public updateMatter(data: IMatterUpdate): Observable<IResponse<IResponseMatter>> {
     const token = localStorage.getItem('token');
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const url = `${this.apiUrl}/${data.id}`;
     const body = {
-      name: data.name
+      name: data.name,
+      code: data.code,
+      career_id: data.career_id
     };
-    return this.http.put<any>(url, body, {headers: header}).pipe(
+    return this.http.put<IResponse<IResponseMatter>>(url, body, {headers: header}).pipe(
       tap(response => {
         // console.log(response);
         // console.log('Emitiendo TeacherCreated...');

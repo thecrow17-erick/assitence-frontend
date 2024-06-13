@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TeacherDialogComponent } from '../../teacher/components/teacher-dialog/teacher-dialog.component';
+import { Component, EventEmitter, Input, Output, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable, first, from } from 'rxjs';
+import { Observable} from 'rxjs';
 
 @Component({
   selector: 'app-section-list',
@@ -10,21 +9,26 @@ import { Observable, first, from } from 'rxjs';
     CommonModule
   ],
   templateUrl: './section-list.component.html',
-  styleUrl: './section-list.component.css'
+  styleUrl: './section-list.component.css' 
 })
 export class SectionListComponent {
 
   @Input() titulo = '';
   @Input() tablas: string[] = [];
   @Input() items: any[] | null = [];
+  @Input() page!: number;
+  @Input() totalPage!: number;
   items$: Observable<any[]>;
 
   @Output() newItem = new EventEmitter<void>();
   @Output() editItem = new EventEmitter<any>();
   @Output() deleteItem = new EventEmitter<any>();
+  @Output() nextPage = new EventEmitter<void>();
+  @Output() previewPage = new EventEmitter<void>();
 
   constructor() {
     this.items$ = new Observable<any[]>();
+    console.log(this.items$)
   }
 
   get ObItablas() {
@@ -32,24 +36,30 @@ export class SectionListComponent {
   }
 
   public ObIitems( item : any) {
-    // console.log( Object.values(item) );
     return Object.values(item)
   }
 
   abrirDialogo() {
     this.newItem.emit();
-    // console.log( this.ObIitems(this.items![0]) );
-    // console.log( this.items$);
   }
 
-  editTeacher(item: any) {
+  nextPageClick(){
+    this.nextPage.emit();
+  }
+
+  previewPageClick(){
+    this.previewPage.emit();
+  }
+
+  editTeacher(item: number) {
+    console.log(item)
     this.editItem.emit(item);
   }
 
   deleteTeacher(item: any) {
     this.deleteItem.emit(item);
   }
-
+  
   getKeys(item: any): string[] {
     return Object.keys(item);
   }

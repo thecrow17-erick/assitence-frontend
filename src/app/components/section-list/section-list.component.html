@@ -1,4 +1,4 @@
-<div class="container mx-auto py-12">
+<div class="container mx-auto h-full overflow-y-scroll py-12">
   <div class="max-w-full px-3 mb-6 mx-auto">
     <div class="card bg-white shadow-lg rounded-lg m-5">
       <div class="card-header flex justify-end items-center p-5 border-b border-gray-200 bg-gray-50">
@@ -6,7 +6,7 @@
           + Añadir {{titulo}}
         </button>
       </div>
-      <div class="card-body p-5 overflow-x-auto">
+      <div class="card-body p-5">
         <table class="table-auto w-full text-left text-gray-700">
           <thead class="bg-gray-100 text-gray-600">
             <tr>
@@ -27,7 +27,7 @@
 
               <td class="p-3 flex justify-start items-center">
                 <button
-                (click)="editItem.emit(item)"
+                (click)="editItem.emit(item.id)"
                 class="mr-2 bg-transparent hover:bg-gray-100 rounded-lg focus:outline-none">
                   <i class="fas fa-edit text-blue-500"></i> </button>
                 <button (click)="deleteItem.emit(item.id)" class="bg-transparent hover:bg-gray-100 rounded-lg focus:outline-none">
@@ -35,6 +35,21 @@
               </td>
             </tr>
           </tbody>
+          <tfoot>
+            <div class='flex items-center justify-center my-5'>
+              <div class="flex justify-center items-center space-x-4">
+                <button 
+                (click)="previewPageClick()"
+                class="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm"><
+                </button>
+                <div class="text-slate-500">{{page + 1}} / {{totalPage}}</div>
+                <button 
+                (click)="nextPageClick()"
+                class="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm">>
+                </button>
+              </div>
+            </div>
+          </tfoot>
         </table>
       </div>
     </div>

@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal, OnDestroy } from '@angular/core';
 import { CareerService } from '../../service/career.service';
-import { Career } from '../../interfaces/career.interface';
+import { ICareer } from '../../interfaces/career.interface';
 import { BehaviorSubject, Observable, Subscription, from } from 'rxjs';
 import { CareerDialogComponent } from '../../components/career-dialog/career-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { SectionListComponent } from '../../../components/section-list/section-list.component';
+import { IValuePagination } from '../../../interface';
 
 @Component({
   selector: 'app-career-list',
@@ -17,46 +18,62 @@ import { SectionListComponent } from '../../../components/section-list/section-l
   templateUrl: './career-list.component.html',
   styleUrl: './career-list.component.css'
 })
-export class CareerListComponent {
+export class CareerListComponent implements OnInit,OnDestroy {
 
-  // public careers$: Observable<Career[]>;
   public careerCreatedSubscription: Subscription = new Subscription();
-  public careers$: BehaviorSubject<Career[]> = new BehaviorSubject<Career[]>([]);
+  public careers = signal<ICareer[]>([]);
+  public pages = signal<number>(0);
+  public totalPages = signal<number>(0);
 
   public tablas: string[] = ['Nombre', 'Estado', 'Acciones'];
+
+  
+  constructor(
+    private careerService: CareerService,
+    public dialog: MatDialog
+  ) {
+    this.getCareers({skip: this.pages(),limit: 6});
+  }
 
   public abrirDialogo(): void {
     this.dialog.open(CareerDialogComponent);
   }
 
-  constructor(
-    private careerService: CareerService,
-    public dialog: MatDialog
-  ) {
-    this.getCareers();
-  }
-
   ngOnInit() {
     this.careerCreatedSubscription = this.careerService.careerCreated.subscribe(() => {
-      // console.log('Recibido teacerCreated');
-      // Actualizar la lista de profesores...
-      this.getCareers();
+      this.getCareers({skip: this.pages(),limit: 6});
     });
   }
 
-  public getCareers(): void {
-    this.careerService.getTeachers().then(response => {
-      const newCareers = [];
-      for (let i = 0; i < response.data.totalElements; i++) {
-        const career: Career = {
-          id : response.data.content[i].id,
-          name: response.data.content[i].name,
-          status: response.data.content[i].status,
-        }
-        newCareers.push(career);
+  public nextPage():void{
+    if(this.pages() < this.totalPages() - 1 ){
+      console.log({page: this.pages(),tota: this.totalPages()})
+      this.pages.update(value => value + 1);
+      this.getCareers({ skip: this.pages(), limit: 6 });
+    }
+  } 
+
+  public previewPage():void{
+    if(this.pages() >= 1 ){
+      console.log({page: this.pages(),tota: this.totalPages()})
+      this.pages.update(value => value - 1);
+      this.getCareers({ skip: this.pages(), limit: 6 });
+    }
+  }
+
+  public getCareers(value:IValuePagination): void {
+    
+    this.careerService.getCareer(value).subscribe(
+      (res)=>{
+        const resCareers:ICareer[] = res.data.content.map(c => ({
+          id: c.id,
+          name: c.name,
+          status: c.status,
+        }));
+        this.careers.set(resCareers);
+        this.totalPages.set(res.data.totalPages);
       }
-      this.careers$.next(newCareers); // Emitir los nuevos profesores
-    });
+    )
   }
 
   editCareer(career: any) {
@@ -69,7 +86,13 @@ export class CareerListComponent {
     // console.log('Eliminando Carrera', id);
     this.careerService.deleteCareer(id).subscribe(() => {
       // console.log('Carrera eliminada');
+      this.getCareers({skip: this.pages(),limit: 6});
     });
+  }
 
+  ngOnDestroy(): void {
+    if (this.careerCreatedSubscription) {
+      this.careerCreatedSubscription.unsubscribe();      
+    }
   }
 }

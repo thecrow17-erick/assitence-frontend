@@ -19,10 +19,8 @@ export class AuthService {
 
     this.http.post<AuthResponse>(this.loginUrl, body).subscribe(
       (Response) => {
-        // console.log(Response);
+        console.log(Response);
         localStorage.setItem('token', Response.data.token);
-        
-
         // console.log( localStorage.getItem('token'));
       }
     )
