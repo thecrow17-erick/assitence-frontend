@@ -8,7 +8,13 @@
           + Añadir Carga horaria
         </button>
       </div>
-      
+      <app-workload-table
+        (nextPage)="nextPage()"
+        (previewPage)="previewPage()"
+        [workloads]="IWorkload()"
+        [page]="pages()"
+        [totalPage]="totalPages()"
+      />
     </div>
   </div>
 </div>

@@ -1,6 +1,5 @@
 import { Route } from "@angular/router";
 import { DashboardComponent } from "./dashboard.component";
-import { MatterListComponent } from "../matter/pages/matter-list/matter-list.component";
 import { TeacherHomeComponent } from "./pages/teacher/teacher-home/teacher-home.component";
 import { TeacherCreateComponent } from "./pages/teacher/teacher-create/teacher-create.component";
 import { CareerHomeComponent } from "./pages/career/career-home/career-home.component";
@@ -49,7 +48,7 @@ export const dashboardRoute:Route[] = [
         component: TeacherCreateComponent,
       },
       {
-        path: "carga-horaria/:id",
+        path: "carga-horaria/:user_id",
         component: WorkloadHomeComponent
       },
       {

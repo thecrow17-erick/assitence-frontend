@@ -8,7 +8,7 @@ export interface IWorkload{
   user:       IUser; 
 }
 
-export interface Workload {
+export interface IWorkloadRes {
   createdAt: Date;
   updatedAt: Date;
   id:        number;
