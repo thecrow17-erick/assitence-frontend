@@ -16,12 +16,14 @@
                   routerLink="/dashboard/{{item.router}}"
                   >
                   <i class="material-icons-outlined">{{item.icon}}</i>
-                  <span class="mx-2 text-sm overflow-hidden md:overflow-auto font-medium">{{item.seccion}}</span>
+                  <span class="mx-2 text-sm overflow-hidden lg:overflow-auto font-medium">{{item.seccion}}</span>
                 </a>
               </div>
             </div>
             <div>
-              <button class="flex w-full items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
+              <button 
+              (click)="logout()"
+              class="flex w-full items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
                   <i class="material-icons-outlined">logout</i>
                   <span class="mx-2 text-sm overflow-hidden md:overflow-auto font-medium">Cerrar sesion</span>
               </button>
@@ -32,7 +34,7 @@
     </aside>
   
     <!-- Main content -->
-    <main class="flex-grow bg-zinc-600 px-6 py-2">
+    <main class="flex-grow px-6 py-2">
       <button class="mb-4 text-white rounded-lg" (click)="toggleSidebar()">
         <mat-icon class="text-white">menu</mat-icon>
       </button>

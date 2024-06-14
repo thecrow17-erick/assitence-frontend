@@ -34,6 +34,12 @@
         </ng-container>
         <td class="p-3 flex justify-start items-center">
           <button
+            (click)="openQrDialog(item.id)"
+            matTooltip="Generar QR"
+            class="mr-2 bg-transparent hover:bg-gray-100 rounded-lg focus:outline-none">
+            <mat-icon class="text-black">qr_code</mat-icon>
+          </button>
+          <button
             (click)="onEdit(item.id)"
             matTooltip="Editar materia"
             class="mr-2 bg-transparent hover:bg-gray-100 rounded-lg focus:outline-none">

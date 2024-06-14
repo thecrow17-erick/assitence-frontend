@@ -3,13 +3,16 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { MaterialModule } from '../../../../material/material.module';
 import { Router } from '@angular/router';
 import { IClassroom } from '../../../interface/classroom';
+import { ClassroomQRDialogComponent } from '../classroom-QR-dialog/classroom-QR-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-classroom-table',
   standalone: true,
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    ClassroomQRDialogComponent
   ],
   templateUrl: './classroom-table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,7 +27,8 @@ export class ClassroomTableComponent {
   @Output() previewPage = new EventEmitter<void>();
 
   constructor(
-    private route: Router
+    private route: Router,
+    public dialog: MatDialog
   ){}
 
   onEdit(id:number){
@@ -40,6 +44,14 @@ export class ClassroomTableComponent {
     "Estatus",
     "Acciones"
   ];
+
+  openQrDialog(id: number):void{
+    this.dialog.open(ClassroomQRDialogComponent, {
+      width: '500px',
+      height: '500px',
+      data: id
+    })
+  }
 
   nextPageClick(){
     this.nextPage.emit();

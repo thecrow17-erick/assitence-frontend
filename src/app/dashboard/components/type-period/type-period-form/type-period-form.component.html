@@ -1,0 +1,37 @@
+<h2 class="text-sm my-2 mx-5 font-semibold">{{typePeriod? "Actualizar tipo periodos": "Crear tipo de periodos"}}</h2>
+
+<div class="container  flex justify-center items-center">
+  <form [formGroup]="typePeriodForm" (ngSubmit)="typePeriod? updateTypePeriod(): createTypePeriod()" class="flex flex-col xl:w-2/4 w-full">
+    <mat-error *ngFor="let item of messageError">
+      {{item}}
+    </mat-error>
+    <mat-form-field class="my-3" appearance="fill">
+      <mat-label>Descripcion</mat-label>
+      <textarea formControlName="description" matInput placeholder="Descripcion de la gestion" required></textarea>
+      <mat-error *ngIf="typePeriodForm.get('description')?.hasError('required') && typePeriodForm.get('description')?.touched">
+        Este campo es obligatorio
+      </mat-error>
+      <mat-error *ngIf="typePeriodForm.get('description')?.hasError('minlength') && typePeriodForm.get('description')?.touched">
+        Mínimo 5 caracteres
+      </mat-error>
+      <mat-error *ngIf="typePeriodForm.get('description')?.hasError('maxlength') && typePeriodForm.get('description')?.touched">
+        Maximo 255 caracteres
+      </mat-error>
+    </mat-form-field>
+    <div >
+      <button
+        (click)="goBack()"
+        type="button"
+        class="underline mr-3 text-red-500">
+        Cancelar
+      </button>
+      
+      <button
+        type="submit"
+        [disabled]="typePeriodForm.invalid"
+        class="py-2 px-5 bg-blue-500 rounded-md text-white">
+        {{typePeriod? "Actualizar":"Crear"}}
+      </button>
+    </div>
+  </form>
+</div>

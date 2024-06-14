@@ -15,6 +15,17 @@ import { ModuleUpdateComponent } from "./pages/module/module-update/module-updat
 import { ClassroomHomeComponent } from "./pages/classroom/classroom-home/classroom-home.component";
 import { ClassroomCreateComponent } from "./pages/classroom/classroom-create/classroom-create.component";
 import { ClassroomUpdateComponent } from "./pages/classroom/classroom-update/classroom-update.component";
+import { ManagementHomeComponent } from "./pages/management/management-home/management-home.component";
+import { ManagementCreateComponent } from "./pages/management/management-create/management-create.component";
+import { ManagementUpdateComponent } from "./pages/management/management-update/management-update.component";
+import { TypePeriodHomeComponent } from "./pages/type-period/type-period-home/type-period-home.component";
+import { TypePeriodCreateComponent } from "./pages/type-period/type-period-create/type-period-create.component";
+import { TypePeriodUpdateComponent } from "./pages/type-period/type-period-update/type-period-update.component";
+import { PeriodHomeComponent } from "./pages/period/period-home/period-home.component";
+import { PeriodCreateComponent } from "./pages/period/period-create/period-create.component";
+import { PeriodUpdateComponent } from "./pages/period/period-update/period-update.component";
+import { authGuard } from "../auth/guard/auth.guard";
+import { WorkloadHomeComponent } from "./pages/workload/workload-home/workload-home.component";
 
 
 export const dashboardRoute:Route[] = [
@@ -22,6 +33,7 @@ export const dashboardRoute:Route[] = [
     path: "",
     title: "dashboard",
     component: DashboardComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: "",
@@ -35,6 +47,10 @@ export const dashboardRoute:Route[] = [
       {
         path: "docente/create",
         component: TeacherCreateComponent,
+      },
+      {
+        path: "carga-horaria/:id",
+        component: WorkloadHomeComponent
       },
       {
         path: "carrera",
@@ -84,6 +100,42 @@ export const dashboardRoute:Route[] = [
       {
         path: "aula/edit/:id",
         component: ClassroomUpdateComponent
+      },
+      {
+        path: "gestion",
+        component: ManagementHomeComponent
+      },
+      {
+        path: "gestion/create",
+        component: ManagementCreateComponent
+      },
+      {
+        path: "gestion/edit/:id",
+        component: ManagementUpdateComponent
+      },
+      {
+        path: "tipo-periodo",
+        component: TypePeriodHomeComponent
+      },
+      {
+        path: "tipo-periodo/create",
+        component: TypePeriodCreateComponent
+      },
+      {
+        path: "tipo-periodo/edit/:id",
+        component: TypePeriodUpdateComponent
+      },
+      {
+        path: "periodo",
+        component: PeriodHomeComponent
+      },
+      {
+        path: "periodo/create",
+        component: PeriodCreateComponent
+      },
+      {
+        path: "periodo/edit/:id",
+        component: PeriodUpdateComponent
       }
     ]
   }

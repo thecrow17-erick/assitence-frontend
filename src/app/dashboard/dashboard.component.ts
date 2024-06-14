@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
+import { logout } from '../../util/logout';
+import { AuthService } from '../auth/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,19 +23,24 @@ export class DashboardComponent {
 
   private secciones:string[]=[
     "Docentes",
-    "Carrera ",
-    "Materia ",
+    "Carreras ",
+    "Materias ",
     "Modulos",
     "Aulas",
+    "Gestiones",
+    "Tipo periodos",
+    "Periodos"
   ];
-
+  
   private router: string[] = [
     "docente",
     "carrera",
     "materia",
     "modulo",
     "aula",
-
+    "gestion",
+    "tipo-periodo",
+    "periodo"
   ]
 
   private iconos : string[] = [
@@ -42,9 +49,14 @@ export class DashboardComponent {
     "receipt_long",
     "view_module",
     "flight_class",
+    "view_cozy",
+    "branding_watermark",
+    "calendar_month"
+
   ];
   constructor(
-    private ruta: Router
+    private ruta: Router,
+    private readonly authService:AuthService
   ) {}
 
   public getSecciones():string[]{
@@ -75,8 +87,12 @@ export class DashboardComponent {
     return this.isSideBarOpen;
   }
 
+  logout(){
+    this.authService.logout();
+    this.ruta.navigate(["auth"]);
+  }
+
   public navegarA(route: string): void {
-    console.log(route);
     this.ruta.navigate(['/dashboard', route]);
   }
 

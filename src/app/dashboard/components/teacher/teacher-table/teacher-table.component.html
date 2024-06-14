@@ -32,6 +32,7 @@
         </ng-container>
         <td class="p-3 flex justify-start items-center">
           <button
+            (click)="workloadNavigate(item.id)"
             matTooltip="Ver sus cargas horarias"
             class="mr-2 bg-transparent hover:bg-gray-100 rounded-lg focus:outline-none">
             <mat-icon class="text-emerald-700">task</mat-icon>

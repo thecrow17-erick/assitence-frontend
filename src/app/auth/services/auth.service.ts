@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../../../enviroments/enviroment';
-import { AuthResponse } from '../interfaces/auth.interface';
+import { AuthResponse, Data } from '../interfaces/auth.interface';
+import { IResponse } from '../../interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +14,20 @@ export class AuthService {
 
   constructor( private http: HttpClient) { }
 
-  async login(email: string , password:string): Promise<void>{
+  login(email: string , password:string): Observable<IResponse<Data>>{
 
     const body = { email : email, password: password};
 
-    this.http.post<AuthResponse>(this.loginUrl, body).subscribe(
-      (Response) => {
-        console.log(Response);
-        localStorage.setItem('token', Response.data.token);
-        // console.log( localStorage.getItem('token'));
-      }
+    return this.http.post<IResponse<Data>>(this.loginUrl, body).pipe(
+      tap(response => {
+        console.log("logeandose")
+      })
     )
+  }
+
+  logout(): void{
+    localStorage.removeItem("token");
+    localStorage.removeItem("user_id");
   }
 
 

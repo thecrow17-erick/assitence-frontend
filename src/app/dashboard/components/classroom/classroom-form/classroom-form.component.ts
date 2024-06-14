@@ -6,6 +6,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ClassroomService } from '../../../service/classroom.service';
 import { Router } from '@angular/router';
 import { MaterialModule } from '../../../../material/material.module';
+import { MatDialog } from '@angular/material/dialog';
+import { ClassroomQRDialogComponent } from '../classroom-QR-dialog/classroom-QR-dialog.component';
 
 @Component({
   selector: 'app-classroom-form',
@@ -13,7 +15,7 @@ import { MaterialModule } from '../../../../material/material.module';
   imports: [
     CommonModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   templateUrl: './classroom-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

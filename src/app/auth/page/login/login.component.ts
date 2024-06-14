@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { MaterialModule } from '../../../material/material.module';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +11,7 @@ import { Router } from '@angular/router';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    MaterialModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
@@ -37,15 +39,22 @@ export class LoginComponent{
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
 
-    this.authService.login(email, password).then(
-      () => {
-        console.log('Usuario logueado');
-        this.router.navigate(['/dashboard']);
-      }
-    ).catch(
-      (error) => {
-        this.errorMessage = error.error.message;
-        console.log(this.errorMessage)
+    this.authService.login(email, password).subscribe(
+      {
+        next:(res)=>{
+          console.log(res)
+          const role:String[] = res.data.user.roles.map(r => r.name);
+          const roleInclude = role.includes("ADMIN");
+
+          if(roleInclude){
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("user_id", res.data.user.id.toString());
+            this.router.navigate(["/dashboard"]);
+          }
+        },
+        error:(err)=>{
+          console.log(err)
+        },
       }
     )
 

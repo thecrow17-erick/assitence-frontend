@@ -37,6 +37,19 @@ export class ClassroomService {
     );
   }
 
+  generateQrClassroom(id:number): Observable<Blob> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
+    const urlId = `${this.apiUrl}/${id}/generate-QR`
+    return this.http.post<Blob>(urlId,{}, {headers,responseType: 'blob' as 'json'}).pipe(
+      tap(response => {
+        console.log(response);
+        console.log('Emitiendo TeacherCreated...');
+        this.classroomCreated.next();
+      })
+    );
+  }
+
   listClassrooms(): Observable<IResponse<IClassroomSelect>>{
     const token = localStorage.getItem('token');
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);

@@ -6,10 +6,10 @@
 </head>
 <body>
   <header
-    class="bg-sky-300 w-full h-32 p-5 flex items-center"
-  >
-    <div>
-      app assistence
+    class="dark:bg-gray-900 dark:border-gray-700 w-full h-32 p-5 flex items-center"
+  > 
+    <div class="flex items-center">
+      <img class="w-auto h-16" src="https://merakiui.com/images/logo.svg" alt="Logo">
     </div>
   </header>
 
@@ -20,7 +20,7 @@
         <h1 class="text-2xl font-bold sm:text-3xl">Ingrese al sistema!</h1>
 
         <p class="mt-4 text-gray-500">
-          Ingreso esclusivamente para adaministradores de la aplicacion de asistencia de docencia
+          Ingreso esclusivamente para administradores de la aplicacion de asistencia de docencia
         </p>
       </div>
 
@@ -40,20 +40,7 @@
             />
 
             <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="size-4 text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                />
-              </svg>
+              <mat-icon class="text-gray-400">alternate_email</mat-icon>
             </span>
           </div>
         </div>
@@ -72,7 +59,7 @@
 
             <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
 
-              <!-- Add the necessary import statement for 'MatIconModule' -->
+              <mat-icon class="text-gray-400">password</mat-icon>
 
             </span>
           </div>
