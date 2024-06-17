@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>Dia de clase</h2>
+<form [formGroup]="timeForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content class="text-center">
+    <div class="flex flex-col">
+      <mat-form-field appearance="fill">
+        <mat-label>Hora de inicio</mat-label>
+        <input matInput type="time" formControlName="time_init" placeholder="Select time" required>
+        <mat-error *ngIf="timeForm.get('time_init')?.hasError('required') && timeForm.get('time_init')?.touched">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+      <br class="h-2 my-5"/>
+      <mat-form-field appearance="fill">
+        <mat-label>Hora de fin</mat-label>
+        <input matInput type="time" formControlName="time_finish" placeholder="Select time" required>
+        <mat-error *ngIf="timeForm.get('time_finish')?.hasError('required') && timeForm.get('time_finish')?.touched">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+      
+      <mat-form-field class="my-3" appearance="fill">
+        <mat-label>Dia de clase</mat-label>
+        <mat-select  formControlName="day">
+          <mat-option 
+          *ngFor="let item of days" 
+          [value]="item.value"
+          >
+            {{item.label}}
+          </mat-option>
+        </mat-select>
+         <mat-error *ngIf="timeForm.get('day')?.hasError('required') && timeForm.get('day')?.touched">
+          Este campo es obligatorio
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="my-3" appearance="fill">
+        <mat-label>Aula de clase</mat-label>
+        <mat-select   formControlName="classroom_id">
+          <mat-option 
+          *ngFor="let item of classroom()" 
+          [value]="item.id"
+          >
+            Aula: {{item.nro}} - modulo: {{item.module.nro}}
+          </mat-option>
+        </mat-select>
+         <mat-error *ngIf="timeForm.get('classroom_id')?.hasError('required') && timeForm.get('classroom_id')?.touched">
+          Este campo es obligatorio
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="close()">Cerrar</button>
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+  </mat-dialog-actions>
+</form>
+

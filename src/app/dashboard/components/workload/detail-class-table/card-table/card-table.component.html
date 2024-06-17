@@ -1,0 +1,22 @@
+
+    <td>
+      {{toDayLabel(IDay.day)}}
+    </td>
+    <td>
+      {{removeTrailingZeros(IDay.start_time)}}
+    </td>
+    <td>
+      {{removeTrailingZeros(IDay.end_time)}}
+    </td>
+    <td>
+      aula: {{classroom()!.nro}} - modulo: {{classroom()!.module.nro}}
+    </td>
+    
+  <td class="p-3 flex justify-start items-center">
+    <button
+      type="button"
+      matTooltip="Eliminar dia de clase"
+      class="mr-2 bg-transparent hover:bg-gray-100 rounded-lg focus:outline-none">
+      <mat-icon class="text-red-700">delete</mat-icon>
+    </button>
+  </td>

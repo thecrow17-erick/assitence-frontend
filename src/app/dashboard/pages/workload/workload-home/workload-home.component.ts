@@ -91,7 +91,8 @@ export class WorkloadHomeComponent implements OnInit, OnDestroy {
   }
 
   public onNavCreate(){
-    this.router.navigate(["/dashboard/tipo-periodo/create"]);
+    const userId = this.route.snapshot.paramMap.get("user_id");
+    this.router.navigate([`/dashboard/carga-horaria/${userId}/create`]);
   }
 
   ngOnDestroy(): void {

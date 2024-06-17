@@ -1,0 +1,16 @@
+<table class="table-auto w-full text-left text-gray-700">
+  <thead class="bg-gray-100 text-gray-600">
+    <tr>
+      <th
+        *ngFor="let tablas of IHead"
+        class="p-3">
+        {{tablas}}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of IClass" class="border-b border-gray-200 hover:bg-gray-50">
+      <app-card-table [IDay]="item"/>
+    </tr>
+  </tbody>
+</table>

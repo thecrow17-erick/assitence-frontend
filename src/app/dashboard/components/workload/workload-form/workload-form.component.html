@@ -1,0 +1,43 @@
+<h2 mat-card-title>Asignar carga horaria</h2>
+<mat-form-field class="my-3" appearance="fill">
+  <mat-label>Periodos</mat-label>
+  <mat-select>
+    <mat-option 
+    *ngFor="let item of periods()" 
+    [value]="item.id"
+    >
+      {{item.name}}
+    </mat-option>
+  </mat-select>
+
+</mat-form-field>
+<form>
+  <h3 mat-card-title>Elija el horario de su materia</h3>
+  <div class="flex flex-col">
+    <mat-form-field class="my-3" appearance="fill">
+      <mat-label>Grupos</mat-label>
+      <mat-select formControlName="management_id">
+        <mat-option 
+        *ngFor="let item of groups()" 
+        [value]="item.id"
+        >
+          {{item.name}}
+        </mat-option>
+      </mat-select>
+      <!-- <mat-error *ngIf="periodForm.get('management_id')?.hasError('required') && periodForm.get('management_id')?.touched">
+        Este campo es obligatorio
+      </mat-error> -->
+    </mat-form-field>
+    <div>
+      <button type="button" mat-button (click)="onCreateDetailClass()">
+        dias
+      </button>
+      <app-class-table [IClass]="days()"/>
+    </div>
+    <div>
+      <button type="button" mat-button (click)="onCreatedGroups()">
+        grupo
+      </button>  
+    </div>
+  </div>
+</form>

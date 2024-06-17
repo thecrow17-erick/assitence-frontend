@@ -25,6 +25,7 @@ import { PeriodCreateComponent } from "./pages/period/period-create/period-creat
 import { PeriodUpdateComponent } from "./pages/period/period-update/period-update.component";
 import { authGuard } from "../auth/guard/auth.guard";
 import { WorkloadHomeComponent } from "./pages/workload/workload-home/workload-home.component";
+import { WorkloadCreateComponent } from "./pages/workload/workload-create/workload-create.component";
 
 
 export const dashboardRoute:Route[] = [
@@ -50,6 +51,10 @@ export const dashboardRoute:Route[] = [
       {
         path: "carga-horaria/:user_id",
         component: WorkloadHomeComponent
+      },
+      {
+        path: "carga-horaria/:user_id/create",
+        component: WorkloadCreateComponent
       },
       {
         path: "carrera",

@@ -18,7 +18,7 @@
     
     <mat-form-field>
       <mat-label>Fecha de inicio - final</mat-label>
-      <mat-date-range-input [formGroup]="periodForm" [rangePicker]="picker">
+      <mat-date-range-input [formGroup]="periodForm"  [rangePicker]="picker">
         <input matStartDate formControlName="init_time" placeholder="Start date">
         <input matEndDate formControlName="finish_time" placeholder="End date">
       </mat-date-range-input>
@@ -33,7 +33,6 @@
         Este campo es obligatorio
       </mat-error>
     </mat-form-field>
-
 
     <mat-form-field class="my-3" appearance="fill">
       <mat-label>Gestiones</mat-label>
