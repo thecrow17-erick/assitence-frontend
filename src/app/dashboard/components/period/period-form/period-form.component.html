@@ -1,0 +1,83 @@
+<h2 class="text-sm my-2 mx-5 font-semibold">{{period? "Actualizar periodo": "Crear period"}}</h2>
+
+<div class="container  flex justify-center items-center">
+  <form [formGroup]="periodForm" (ngSubmit)="period? updatePeriod(): createPeriod()" class="flex flex-col xl:w-2/4 w-full">
+    <mat-error ngIf="messageError" *ngFor="let item of messageError">
+      {{item}}
+    </mat-error>
+    <mat-form-field class="my-3" appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input formControlName="name" matInput placeholder="Nombre de la carrera" required>
+      <mat-error *ngIf="periodForm.get('name')?.hasError('required') && periodForm.get('name')?.touched">
+        Este campo es obligatorio
+      </mat-error>
+      <mat-error *ngIf="periodForm.get('name')?.hasError('minlength') && periodForm.get('name')?.touched">
+        Mínimo 3 caracteres
+      </mat-error>
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-label>Fecha de inicio - final</mat-label>
+      <mat-date-range-input [formGroup]="periodForm"  [rangePicker]="picker">
+        <input matStartDate formControlName="init_time" placeholder="Start date">
+        <input matEndDate formControlName="finish_time" placeholder="End date">
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+      
+      <mat-error *ngIf="periodForm.get('init_time')?.hasError('required') && periodForm.get('init_time')?.touched">
+        Este campo es obligatorio
+      </mat-error>
+      <mat-error *ngIf="periodForm.get('finish_time')?.hasError('required') && periodForm.get('finish_time')?.touched">
+        Este campo es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="my-3" appearance="fill">
+      <mat-label>Gestiones</mat-label>
+      <mat-select formControlName="management_id">
+        <mat-option 
+        *ngFor="let item of managements" 
+        [value]="item.id"
+        >
+          {{item.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="periodForm.get('management_id')?.hasError('required') && periodForm.get('management_id')?.touched">
+        Este campo es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="my-3" appearance="fill">
+      <mat-label>Tipos de periodo</mat-label>
+      <mat-select formControlName="type_period_id">
+        <mat-option 
+        *ngFor="let item of typePeriods" 
+        [value]="item.id"
+        >
+          {{item.description}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="periodForm.get('type_period_id')?.hasError('required') && periodForm.get('type_period_id')?.touched">
+        Este campo es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <div >
+      <button
+        (click)="goBack()"
+        type="button"
+        class="underline mr-3 text-red-500">
+        Cancelar
+      </button>
+      
+      <button
+        type="submit"
+        [disabled]="periodForm.invalid"
+        class="py-2 px-5 bg-blue-500 rounded-md text-white">
+        {{period? "Actualizar":"Crear"}}
+      </button>
+    </div>
+  </form>
+</div>

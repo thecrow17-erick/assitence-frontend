@@ -3,6 +3,14 @@ export interface LoginBody {
   password: string;
 }
 
+export interface IUser {
+  id:        number;
+  name:      string;
+  email:     string;
+  phone:     string;
+  roles:     Role[];
+}
+
 
 export interface IResponseLogin {
   token: string;
@@ -18,7 +26,6 @@ export interface User {
   password:  string;
   phone:     string;
   roles:     Role[];
-  workloads: any[];
 }
 
 export interface Role {

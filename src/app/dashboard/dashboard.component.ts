@@ -1,13 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { MaterialModule } from '../material/material.module';
+import { logout } from '../../util/logout';
+import { AuthService } from '../auth/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    MaterialModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
@@ -19,43 +23,41 @@ export class DashboardComponent {
 
   private secciones:string[]=[
     "Docentes",
-    "Cargas Horarias",
-    "Carrera ",
-    "Materia ",
-    "Gestion",
-    "Periodos",
+    "Carreras ",
+    "Materias ",
     "Modulos",
-    "Reportes",
+    "Aulas",
+    "Gestiones",
+    "Tipo periodos",
+    "Periodos"
   ];
-
+  
   private router: string[] = [
     "docente",
-    "carga-horaria",
     "carrera",
     "materia",
-    "gestion",
-    "periodo",
     "modulo",
-    "reporte",
+    "aula",
+    "gestion",
+    "tipo-periodo",
+    "periodo"
   ]
 
   private iconos : string[] = [
     "person_2",
     "pending_actions",
     "receipt_long",
-    "subject",
-    "task",
-    "date_range",
     "view_module",
-    "assessment",
+    "flight_class",
+    "view_cozy",
+    "branding_watermark",
+    "calendar_month"
+
   ];
   constructor(
-    private ruta: Router
-  ) {
-
-
-
-  }
+    private ruta: Router,
+    private readonly authService:AuthService
+  ) {}
 
   public getSecciones():string[]{
     return this.secciones;
@@ -73,9 +75,6 @@ export class DashboardComponent {
     const secciones = this.getSecciones();
     const icons = this.getIcons();
     const router = this.getRouter();
-
-
-
     return secciones.map((seccion, index) => ({ seccion, icon: icons[index] , router: router[index]}));
   }
 
@@ -88,8 +87,12 @@ export class DashboardComponent {
     return this.isSideBarOpen;
   }
 
+  logout(){
+    this.authService.logout();
+    this.ruta.navigate(["auth"]);
+  }
+
   public navegarA(route: string): void {
-    console.log(route);
     this.ruta.navigate(['/dashboard', route]);
   }
 

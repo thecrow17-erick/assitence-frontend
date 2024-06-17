@@ -1,0 +1,48 @@
+<h2 class="text-sm my-2 mx-5 font-semibold">{{module? "Actualizar modulo": "Crear modulo"}}</h2>
+
+<div class="container  flex justify-center items-center">
+  <form [formGroup]="moduleForm" (ngSubmit)="module? updateModule(): createModule()" class="flex flex-col xl:w-2/4 w-full">
+    <mat-error *ngFor="let item of messageError">
+      {{item}}
+    </mat-error>
+    <mat-form-field class="my-3" appearance="fill">
+      <mat-label>Numero</mat-label>
+      <input formControlName="nro" matInput placeholder="Numero del modulo" required>
+      <mat-error *ngIf="moduleForm.get('nro')?.hasError('required') && moduleForm.get('nro')?.touched">
+        Este campo es obligatorio
+      </mat-error>
+      <mat-error *ngIf="moduleForm.get('nro')?.hasError('minlength') && moduleForm.get('nro')?.touched">
+        Mínimo 3 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="my-3" appearance="fill">
+      <mat-label>Descripcion</mat-label>
+      <textarea formControlName="description" matInput placeholder="Descripcion del modulo" required></textarea>
+      <mat-error *ngIf="moduleForm.get('description')?.hasError('required') && moduleForm.get('description')?.touched">
+        Este campo es obligatorio
+      </mat-error>
+      <mat-error *ngIf="moduleForm.get('description')?.hasError('minlength') && moduleForm.get('description')?.touched">
+        Mínimo 10 caracteres
+      </mat-error>
+      <mat-error *ngIf="moduleForm.get('description')?.hasError('maxlength') && moduleForm.get('description')?.touched">
+        Maximo 255 caracteres
+      </mat-error>
+    </mat-form-field>
+    <div >
+      <button
+        (click)="goBack()"
+        type="button"
+        class="underline mr-3 text-red-500">
+        Cancelar
+      </button>
+      
+      <button
+        type="submit"
+        [disabled]="moduleForm.invalid"
+        class="py-2 px-5 bg-blue-500 rounded-md text-white">
+        {{module? "Actualizar":"Crear"}}
+      </button>
+    </div>
+  </form>
+</div>

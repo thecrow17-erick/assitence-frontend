@@ -1,0 +1,22 @@
+<div class="container mx-auto h-full overflow-y-scroll py-12">
+  <div class="max-w-full px-3 mb-6 mx-auto">
+    <div class="card bg-white shadow-lg rounded-lg m-5">
+      <div class="card-header flex justify-end items-center p-5 border-b border-gray-200 bg-gray-50">
+        <button 
+        (click)="onNavCreate()"
+        class="btn-new-teacher px-6 py-2 rounded-lg font-bold text-white bg-blue-600 hover:bg-blue-700 transition-transform transform hover:-translate-y-1">
+          + Añadir Docente
+        </button>
+      </div>
+      <app-teacher-table
+        [ITeachers]="teachers()"
+        [page]="pages()"
+        [totalPage]="totalPages()"
+        (nextPage)="nextPage"
+        (previewPage)="previewPage"
+        (delete)="deleteTeacher($event)"
+        (reestartPassword)="passwordReestar"
+      />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<h2 class="text-sm my-2 mx-5 font-semibold">{{management? "Actualizar gestion": "Crear gestion"}}</h2>
+
+<div class="container  flex justify-center items-center">
+  <form [formGroup]="managementForm" (ngSubmit)="management? updateManagement(): createManagement()" class="flex flex-col xl:w-2/4 w-full">
+    <mat-error *ngFor="let item of messageError">
+      {{item}}
+    </mat-error>
+    <mat-form-field class="my-3" appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input formControlName="name" matInput placeholder="Nombre de la gestion" required>
+      <mat-error *ngIf="managementForm.get('name')?.hasError('required') && managementForm.get('name')?.touched">
+        Este campo es obligatorio
+      </mat-error>
+      <mat-error *ngIf="managementForm.get('name')?.hasError('minlength') && managementForm.get('name')?.touched">
+        Mínimo 3 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="my-3" appearance="fill">
+      <mat-label>Descripcion</mat-label>
+      <textarea formControlName="description" matInput placeholder="Descripcion de la gestion" required></textarea>
+      <mat-error *ngIf="managementForm.get('description')?.hasError('required') && managementForm.get('description')?.touched">
+        Este campo es obligatorio
+      </mat-error>
+      <mat-error *ngIf="managementForm.get('description')?.hasError('minlength') && managementForm.get('description')?.touched">
+        Mínimo 10 caracteres
+      </mat-error>
+      <mat-error *ngIf="managementForm.get('description')?.hasError('maxlength') && managementForm.get('description')?.touched">
+        Maximo 255 caracteres
+      </mat-error>
+    </mat-form-field>
+    <div >
+      <button
+        (click)="goBack()"
+        type="button"
+        class="underline mr-3 text-red-500">
+        Cancelar
+      </button>
+      
+      <button
+        type="submit"
+        [disabled]="managementForm.invalid"
+        class="py-2 px-5 bg-blue-500 rounded-md text-white">
+        {{management? "Actualizar":"Crear"}}
+      </button>
+    </div>
+  </form>
+</div>

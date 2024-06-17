@@ -19,7 +19,6 @@ export interface User {
   phone:     string;
   status:    boolean;
   roles:     Role[];
-  workloads: any[];
 }
 
 export interface Role {

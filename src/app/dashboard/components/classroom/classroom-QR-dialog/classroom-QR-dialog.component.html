@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>QR Code</h2>
+<mat-dialog-content class="text-center">
+  <div id="print-section" class="flex justify-center">
+    <ng-container class="flex items-center" *ngIf="qrImageUrl; else loading">
+      <img class="max-h-max h-auto" [src]="qrImageUrl()" alt="QR Code">
+    </ng-container>
+  </div>
+  <ng-template #loading>
+    <p>Loading...</p>
+  </ng-template>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="close()">Cerrar</button>
+  <button mat-button ngxPrint printSectionId="print-section">Imprimir QR</button>
+</mat-dialog-actions>
