@@ -23,23 +23,7 @@ export class TeacherComponent {
 
   private teacherCreatedSubscription: Subscription = new Subscription();
   public teachers$: BehaviorSubject<Teacher[]> = new BehaviorSubject<Teacher[]>([]);
-  public keys: string[] = [
-    'id',
-    'name',
-    'email',
-    'phone',
-    'status'
-  ];
-  public teachers:Teacher[] = [
-    {
-      id: 1,
-      name: 'Juan',
-      email: '',
-      phone: '',
-      status: true
-    },
-  ];
-
+  //Tablas para mostrar en el CRUD osea las columnas
   public tablas: string[] = ['Nombre', 'Email', 'Telefono', 'Estado', 'Acciones'];
 
   constructor(
@@ -85,9 +69,9 @@ export class TeacherComponent {
   }
 
   public deleteTeacher(id: number): void {
-    console.log('Eliminando profesor', id);
+    // console.log('Eliminando profesor', id);
     this.teacherservice.deleteTeacher(id).subscribe(() => {
-      console.log('Profesor eliminado');
+      // console.log('Profesor eliminado');
     });
   }
 
